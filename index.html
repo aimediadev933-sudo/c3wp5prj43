@@ -1,1 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligent Medical Services over TEIN</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        :root {
+            --primary: #EF5350;
+            --secondary: #FF7043;
+            --body: #F8F3F0;
+            --text: #1D1D1B;
+            --secondary-dark: #9C3A26;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--body);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .logos {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            height: 60px;
+            width: auto;
+            transition: transform 0.3s ease;
+            background: white;
+            padding: 5px;
+            border-radius: 8px;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        .hero-text h1 {
+            font-size: 2.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .hero-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--secondary-dark);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-menu {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: background-color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-menu a:hover {
+            background-color: var(--primary);
+        }
+
+        /* Main Content */
+        main {
+            padding: 3rem 0;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--primary);
+        }
+
+        .section h2 {
+            color: var(--secondary-dark);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .healthcare-highlight {
+            background: linear-gradient(135deg, #ffeef0, #ffebee);
+            border-left-color: #e91e63;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .healthcare-highlight h4 {
+            color: #ad1457;
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(239, 83, 80, 0.3);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .countries-network {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .country-card {
+            background: var(--body);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .country-card:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .country-card.lead {
+            background: var(--primary);
+            color: white;
+        }
+
+        .ai-technologies {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .ai-card {
+            background: linear-gradient(135deg, var(--secondary-dark), #b85450);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .ai-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(156, 58, 38, 0.3);
+        }
+
+        .ai-card h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .ai-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .imc-platform {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .imc-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .imc-feature {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .imc-feature:hover {
+            background: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        .training-programs {
+            background: var(--body);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .program-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .program-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .program-icon {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            margin-right: 1.5rem;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .program-content h4 {
+            color: var(--secondary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .tein-network {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .tein-network h4 {
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .partner-card {
+            background: var(--body);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .partner-card:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .partner-card.lead {
+            background: var(--primary);
+            color: white;
+        }
+
+        .outcomes {
+            background: linear-gradient(135deg, #fff, #e8f5e8);
+            border-left-color: #27ae60;
+        }
+
+        .challenges {
+            background: linear-gradient(135deg, #fff, var(--body));
+            border-left-color: #e74c3c;
+        }
+
+        .korea-flag {
+            display: inline-block;
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary-dark);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .sdg-badges {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .sdg-badge {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-text h1 {
+                font-size: 1.6rem;
+            }
+
+            .hero-text p {
+                font-size: 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logos {
+                justify-content: center;
+            }
+
+            .logo {
+                height: 50px;
+            }
+
+            .nav-menu {
+                gap: 1rem;
+            }
+
+            .section {
+                padding: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .program-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .program-icon {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .hero-text h1 {
+                font-size: 1.4rem;
+            }
+
+            .section h2 {
+                font-size: 1.5rem;
+            }
+
+            .logo {
+                height: 40px;
+            }
+
+            .logos {
+                gap: 1rem;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logos">
+                    <img src="images/logos/eu-logo.png" alt="European Union" class="logo">
+                    <img src="images/logos/tein-logo.png" alt="TEIN CC" class="logo">
+                    <img src="images/logos/asia-connect-logo.png" alt="Asia Connect" class="logo">
+                </div>
+                <div class="hero-text">
+                    <h1>Intelligent Medical Services</h1>
+                    <p>AI-Enabled Digital Health Platform over TEIN</p>
+                    <div class="hero-badge"><span class="korea-flag">🇰🇷</span>Led by South Korea • 3rd Call • IMC Platform</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul class="nav-menu">
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#platform">IMC Platform</a></li>
+                <li><a href="#training">Training</a></li>
+                <li><a href="#outcomes">Outcomes</a></li>
+                <li><a href="#partners">Partners</a></li>
+                <li><a href="#future">Future</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="overview" class="section">
+            <h2>Project Overview</h2>
+            <p>This project focused on building the Intelligent Medical Core (IMC), an AI-enabled digital health platform to facilitate smart, personalized medical services. It enabled cross-country collaboration in Asia via the TEIN network through <span class="highlight">medical education, healthcare resource sharing, and collaborative research</span>. The initiative integrated AI, big data, and cloud computing into medical training and practice, targeting low-resource regions.</p>
+            
+            <div class="healthcare-highlight">
+                <h4>🏥 Revolutionary Digital Health Platform</h4>
+                <p>The IMC platform combines artificial intelligence, big data analytics, and cloud computing to deliver personalized medical services and enable cross-border healthcare collaboration across Asia.</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">70+</div>
+                    <div>Participants Trained</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">36</div>
+                    <div>AI Summer School</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5</div>
+                    <div>Partner Countries</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">7</div>
+                    <div>Beneficiary Nations</div>
+                </div>
+            </div>
+
+            <h3>🌏 Multi-Country Collaboration</h3>
+            <div class="countries-network">
+                <div class="country-card lead">🇰🇷 South Korea (Lead)</div>
+                <div class="country-card">🇲🇾 Malaysia</div>
+                <div class="country-card">🇵🇰 Pakistan</div>
+                <div class="country-card">🇻🇳 Vietnam</div>
+                <div class="country-card">🇹🇭 Thailand</div>
+                <div class="country-card">🇧🇩 Bangladesh</div>
+                <div class="country-card">🇦🇪 UAE</div>
+                <div class="country-card">🇨🇳 China</div>
+            </div>
+        </section>
+
+        <section id="platform" class="section">
+            <h2>Intelligent Medical Core (IMC) Platform</h2>
+            <div class="ai-technologies">
+                <div class="ai-card">
+                    <div class="ai-icon">🧠</div>
+                    <h3>AI Decision Support</h3>
+                    <p>Machine learning algorithms for diagnostic assistance and personalized treatment recommendations</p>
+                </div>
+                <div class="ai-card">
+                    <div class="ai-icon">🔍</div>
+                    <h3>Medical Image Analysis</h3>
+                    <p>AI-powered image diagnostics and pattern recognition for radiology and pathology</p>
+                </div>
+                <div class="ai-card">
+                    <div class="ai-icon">📊</div>
+                    <h3>Big Data Processing</h3>
+                    <p>Large-scale medical data analytics and knowledge extraction from clinical datasets</p>
+                </div>
+                <div class="ai-card">
+                    <div class="ai-icon">🌐</div>
+                    <h3>IoMT Integration</h3>
+                    <p>Internet of Medical Things connectivity for real-time patient monitoring and data collection</p>
+                </div>
+                <div class="ai-card">
+                    <div class="ai-icon">🏥</div>
+                    <h3>Patient-Centered Care</h3>
+                    <p>Personalized healthcare services and patient engagement through intelligent interfaces</p>
+                </div>
+                <div class="ai-card">
+                    <div class="ai-icon">☁️</div>
+                    <h3>Cloud Infrastructure</h3>
+                    <p>Scalable cloud deployment with secure access through TEIN network connectivity</p>
+                </div>
+            </div>
+
+            <div class="imc-platform">
+                <h3>🏗️ IMC Architecture Components</h3>
+                <p>Modular platform architecture enabling comprehensive medical service delivery:</p>
+                <div class="imc-features">
+                    <div class="imc-feature">Knowledge Engine</div>
+                    <div class="imc-feature">AI Diagnosis Models</div>
+                    <div class="imc-feature">Service Interfaces</div>
+                    <div class="imc-feature">Content Management</div>
+                    <div class="imc-feature">Big Data Analytics</div>
+                    <div class="imc-feature">Patient Support</div>
+                    <div class="imc-feature">TEIN Integration</div>
+                    <div class="imc-feature">Security Framework</div>
+                </div>
+            </div>
+
+            <div class="tein-network">
+                <h4>🌐 TEIN Network Integration</h4>
+                <p>Cloud-connected IMC platform accessible through TEIN infrastructure with dedicated IP allocation for secure collaboration and data sharing across partner universities and hospitals.</p>
+            </div>
+        </section>
+
+        <section id="training" class="section">
+            <h2>Medical Education & Training Programs</h2>
+            <div class="training-programs">
+                <div class="program-item">
+                    <div class="program-icon">📚</div>
+                    <div class="program-content">
+                        <h4>Spring Lecture Series 2019</h4>
+                        <p>Delivered over TEIN for participants from five countries, covering ICT applications in healthcare, machine learning in diagnostics, IoMT, and Asian case studies.</p>
+                    </div>
+                </div>
+                <div class="program-item">
+                    <div class="program-icon">🎓</div>
+                    <div class="program-content">
+                        <h4>AI Doctor Summer School 2019</h4>
+                        <p>Immersive training at Kyung Hee University with 36 international students exploring AI-powered medical systems, image diagnostics, and prototyping.</p>
+                    </div>
+                </div>
+                <div class="program-item">
+                    <div class="program-icon">🏛️</div>
+                    <div class="program-content">
+                        <h4>APAN 48 Workshop on IMS</h4>
+                        <p>Joint event with APAN community in Malaysia focusing on health silos, medical education platforms, and collaborative innovation through digital tools.</p>
+                    </div>
+                </div>
+                <div class="program-item">
+                    <div class="program-icon">💻</div>
+                    <div class="program-content">
+                        <h4>Online Resource Platform</h4>
+                        <p>Website launch at ims-tein.com hosting documentation, training content, recorded sessions, and source code for open access to educational resources.</p>
+                    </div>
+                </div>
+                <div class="program-item">
+                    <div class="program-icon">🤝</div>
+                    <div class="program-content">
+                        <h4>Cross-Border Collaboration</h4>
+                        <p>Secure data sharing and collaborative research initiatives connecting universities and hospitals across the TEIN network infrastructure.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="outcomes" class="section outcomes">
+            <h2>Key Achievements & Medical Impact</h2>
+            
+            <h3>🚀 Platform Development Success</h3>
+            <ul style="margin: 1rem 0; padding-left: 2rem;">
+                <li><strong>IMC Platform Established:</strong> Multi-layered system for knowledge acquisition and healthcare delivery developed and shared across TEIN</li>
+                <li><strong>Cloud Integration:</strong> IMC cloud deployment connected through TEIN with IP-based accessibility for partner institutions</li>
+                <li><strong>AI Medical Services:</strong> Intelligent diagnostic support and personalized healthcare delivery capabilities</li>
+                <li><strong>Open Access Resources:</strong> Comprehensive educational materials and technical documentation publicly available</li>
+            </ul>
+
+            <h3>👨‍⚕️ Medical Education Excellence</h3>
+            <p><strong>70+ Healthcare Professionals Trained:</strong> Comprehensive training delivered via Spring Lecture Series, AI Summer School, and APAN workshops across multiple countries.</p>
+            <p><strong>International Collaboration:</strong> 36 international students and researchers participated in immersive AI Doctor Summer School program at Kyung Hee University.</p>
+            
+            <h3>🌐 Regional Healthcare Network</h3>
+            <p>Established sustainable healthcare collaboration framework connecting medical institutions across Asia through TEIN infrastructure, enabling knowledge sharing and joint research initiatives in medical informatics.</p>
+        </section>
+
+        <section id="partners" class="section">
+            <h2>Strategic Healthcare Partnership Network</h2>
+            <p>Led by Kyung Hee University, South Korea, with comprehensive medical and academic collaboration across Asia:</p>
+            
+            <div class="partners-grid">
+                <div class="partner-card lead">
+                    <h3>Kyung Hee University</h3>
+                    <p>Republic of Korea<br><strong>Lead Institution</strong></p>
+                </div>
+                <div class="partner-card">
+                    <h3>University of Malaya</h3>
+                    <p>Malaysia<br>Medical Research Partner</p>
+                </div>
+                <div class="partner-card">
+                    <h3>SKMCH</h3>
+                    <p>Shaukat Khanum Memorial<br>Cancer Hospital, Pakistan</p>
+                </div>
+                <div class="partner-card">
+                    <h3>HCMUT</h3>
+                    <p>Ho Chi Minh City<br>University of Technology</p>
+                </div>
+                <div class="partner-card">
+                    <h3>Chulalongkorn University</h3>
+                    <p>Thailand<br>Medical Education Partner</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section challenges">
+            <h2>Challenges & Future Directions</h2>
+            
+            <h3>⚠️ Implementation Challenges</h3>
+            <ul style="margin: 1rem 0; padding-left: 2rem;">
+                <li><strong>Connectivity Dependence:</strong> Reliance on TEIN and national NRENs required robust collaboration for stable platform access</li>
+                <li><strong>Resource Limitations:</strong> Limited local infrastructure in developing regions sometimes hindered full adoption of AI medical services</li>
+                <li><strong>Digital Health Literacy:</strong> Varying levels of medical informatics expertise across partner institutions</li>
+                <li><strong>Data Privacy Compliance:</strong> Managing cross-border medical data sharing while ensuring regulatory compliance</li>
+            </ul>
+
+            <h3>🚀 Innovation & Expansion Plans</h3>
+            <p><strong>Disease-Specific Silos:</strong> Extend IMC platform to support specialized modules for diabetes, cardiovascular diseases, and oncology care.</p>
+            <p><strong>Enhanced Medical Education:</strong> Launch comprehensive MOOCs and blended learning programs for ICT in medicine across TEIN universities.</p>
+            <p><strong>Clinical Pilot Integration:</strong> Implement IMC into trial hospital systems in member countries for real-world validation and improvement.</p>
+            <p><strong>Telemedicine Expansion:</strong> Develop advanced telemedicine capabilities leveraging TEIN network infrastructure for remote patient care.</p>
+        </section>
+
+        <section id="future" class="section">
+            <h2>Sustainable Development Goals</h2>
+            <p>This intelligent medical platform directly advances global health and educational objectives:</p>
+            <div class="sdg-badges">
+                <div class="sdg-badge">SDG 3: Good Health & Well-being</div>
+                <div class="sdg-badge">SDG 4: Quality Education</div>
+                <div class="sdg-badge">SDG 9: Innovation & Infrastructure</div>
+                <div class="sdg-badge">SDG 17: Partnerships for Goals</div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Project Details</h3>
+                    <p>Category: WP5 (Work Package 5)</p>
+                    <p>Call: 3rd Call</p>
+                    <p>Focus: AI Medical Services</p>
+                    <p>Lead: South Korea 🇰🇷 (KHU)</p>
+                    <p>Platform: IMC over TEIN</p>
+                </div>
+                <div class="footer-section">
+                    <h3>AI Healthcare Technologies</h3>
+                    <p>• Intelligent Medical Core (IMC)</p>
+                    <p>• AI Diagnostic Support</p>
+                    <p>• Medical Image Analysis</p>
+                    <p>• Big Data Processing</p>
+                    <p>• IoMT Integration</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Global Health Impact</h3>
+                    <p>Revolutionizing healthcare delivery across Asia through AI-powered medical services, cross-border collaboration, and comprehensive medical education programs over the TEIN network.</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Intelligent Medical Services over TEIN. Led by Kyung Hee University with international partners. Supported by European Union, TEIN CC, and Asia Connect.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+            } else {
+                nav.style.boxShadow = 'none';
+            }
+        });
+
+        // Animate stat numbers on scroll
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumbers = entry.target.querySelectorAll('.stat-number');
+                    statNumbers.forEach(stat => {
+                        const text = stat.textContent;
+                        if (text.includes('+')) {
+                            const finalValue = parseInt(text);
+                            animateValue(stat, 0, finalValue, 2000, '+');
+                        } else if (!isNaN(parseInt(text))) {
